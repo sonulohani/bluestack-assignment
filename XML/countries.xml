@@ -1,0 +1,20 @@
+<countries>
+  <country code="BR" iso="76">Português</country>
+  <country code="CN" iso="156">中文</country>
+  <country code="CZ" iso="203">Čeština</country>
+  <country code="DE" iso="276">Deutsch</country>
+  <country code="ES" iso="724">Español</country>
+  <country code="FR" iso="250">Français</country>
+  <country code="ID" iso="360">Indonesia</country>
+  <country code="IT" iso="380">Italiano</country>
+  <country code="JP" iso="392">日本語</country>
+  <country code="KR" iso="410">한국어</country>
+  <country code="MY" iso="458">Melayu</country>
+  <country code="NL" iso="528">Nederlands</country>  
+  <country code="RU" iso="643">Русский</country>
+  <country code="SA" iso="682">العربية</country>  
+  <country code="TH" iso="764">ไทย</country>  
+  <country code="TW" iso="158">台灣</country>
+  <country code="US" iso="840">English</country>
+  <country code="VN" iso="704">Tiếng Việt</country>  
+</countries>

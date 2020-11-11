@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/favicon.ico</file>
+        <file>resources/officialLogo.png</file>
+        <file>resources/white-arrow-down.png</file>
+        <file>Countries/br.png</file>
+        <file>Countries/cn.png</file>
+        <file>Countries/cz.png</file>
+        <file>Countries/de.png</file>
+        <file>Countries/es.png</file>
+        <file>Countries/fr.png</file>
+        <file>Countries/id.png</file>
+        <file>Countries/it.png</file>
+        <file>Countries/jp.png</file>
+        <file>Countries/kr.png</file>
+        <file>Countries/my.png</file>
+        <file>Countries/nl.png</file>
+        <file>Countries/ru.png</file>
+        <file>Countries/sa.png</file>
+        <file>Countries/th.png</file>
+        <file>Countries/tw.png</file>
+        <file>Countries/us.png</file>
+        <file>Countries/vn.png</file>
+        <file>XML/countries.xml</file>
+    </qresource>
+</RCC>
