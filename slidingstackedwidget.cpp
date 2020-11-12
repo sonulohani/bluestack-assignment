@@ -70,7 +70,6 @@ void SlidingStackedWidget::slideInIdx(int idx, enum t_direction direction)
         idx = (idx + count()) % count();
     }
     slideInWgt(widget(idx), direction);
-    //widget() is a function inherited from QStackedWidget
 }
 
 void SlidingStackedWidget::slideInWgt(QWidget *newwidget, enum t_direction direction)

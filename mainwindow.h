@@ -14,6 +14,6 @@ public:
     virtual ~MainWindow() = default;
 
 private:
-    ContainerWidget *containerWidget;
+    ContainerWidget *m_pContainerWidget;
 };
 #endif // MAINWINDOW_H

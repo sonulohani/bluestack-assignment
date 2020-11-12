@@ -4,11 +4,13 @@
 #include "topbarwidget.h"
 
 #include <chrono>
+#include <QDebug>
 #include <QDir>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QResizeEvent>
+#include <QScreen>
 
 ContainerWidget::ContainerWidget(QWidget *parent) : QWidget(parent)
 {
@@ -19,38 +21,39 @@ ContainerWidget::ContainerWidget(QWidget *parent) : QWidget(parent)
 
     new TopBarWidget{this};
 
-    stackedWidget = new SlidingStackedWidget{this};
+    m_pSlidingStackedWidget = new SlidingStackedWidget{this};
 
     for (const auto &imageFileInfo : imageFileInfoList) {
-        stackedWidget->addWidget(new ImageViewLabel{imageFileInfo.absoluteFilePath(), this});
+        m_pSlidingStackedWidget->addWidget(
+            new ImageViewLabel{imageFileInfo.absoluteFilePath(), this});
     }
 
     auto *layout = new QHBoxLayout{this};
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 0);
-    layout->addWidget(stackedWidget);
+    layout->addWidget(m_pSlidingStackedWidget);
 
     setLayout(layout);
 
     startTimer(std::chrono::seconds(3));
 
-    header = new QLabel{this};
-    header->setText("Bluestacks Editor's Choice");
-    header->setStyleSheet("QLabel {color: #5EC1E9;}");
-    header->setFixedSize(320, 30);
-    QFont font = header->font();
+    m_pHeaderLabel = new QLabel{this};
+    m_pHeaderLabel->setText(QObject::tr("Bluestacks Editor's Choice"));
+    m_pHeaderLabel->setStyleSheet("QLabel {color: #5EC1E9;}");
+    m_pHeaderLabel->setFixedSize(320, 30);
+    QFont font{m_pHeaderLabel->font()};
     font.setPointSize(14);
     font.setBold(false);
-    header->setFont(font);
+    m_pHeaderLabel->setFont(font);
 
-    content = new QLabel{this};
-    content->setText(
-        "Every week we pick our favourite android apps that look and play beautifully on your PC");
-    content->setStyleSheet("QLabel {color: #FFFFFF;}");
-    font = content->font();
+    m_pContentLabel = new QLabel{this};
+    m_pContentLabel->setText(QObject::tr(
+        "Every week we pick our favourite android apps that look and play beautifully on your PC"));
+    m_pContentLabel->setStyleSheet("QLabel {color: #FFFFFF;}");
+    font = m_pContentLabel->font();
     font.setPointSize(10);
-    content->setFont(font);
-    content->setFixedSize(1000, 30);
+    m_pContentLabel->setFont(font);
+    m_pContentLabel->setFixedSize(1000, 30);
 
     m_pDownloadBluestackButton = new QPushButton{this};
     m_pDownloadBluestackButton->setText(QObject::tr("Download Bluestacks"));
@@ -62,15 +65,25 @@ ContainerWidget::ContainerWidget(QWidget *parent) : QWidget(parent)
     m_pDownloadBluestackButton->raise();
 }
 
-void ContainerWidget::timerEvent(QTimerEvent *event)
+void ContainerWidget::timerEvent(QTimerEvent *)
 {
-    stackedWidget->slideInNext();
+    m_pSlidingStackedWidget->slideInNext();
 }
 
 void ContainerWidget::resizeEvent(QResizeEvent *event)
 {
-    static QSize size = event->size();
-    m_pDownloadBluestackButton->move(event->size().width() - 350, 110);
-    header->move(ImageViewLabel::PIXMAP_POS.x(), ImageViewLabel::PIXMAP_POS.y() - 80);
-    content->move(ImageViewLabel::PIXMAP_POS.x(), ImageViewLabel::PIXMAP_POS.y() - 50);
+    if (m_pSlidingStackedWidget->count()) {
+        auto label = qobject_cast<ImageViewLabel *>(m_pSlidingStackedWidget->widget(0));
+        if (label) {
+            auto screen = label->screen();
+            qDebug() << screen->devicePixelRatio();
+            m_pDownloadBluestackButton->move((event->size().width() - 325)
+                                                 * label->devicePixelRatio(),
+                                             110);
+            m_pHeaderLabel->move(ImageViewLabel::PIXMAP_POS.x(),
+                                 ImageViewLabel::PIXMAP_POS.y() - 80);
+            m_pContentLabel->move(ImageViewLabel::PIXMAP_POS.x(),
+                                  ImageViewLabel::PIXMAP_POS.y() - 50);
+        }
+    }
 }

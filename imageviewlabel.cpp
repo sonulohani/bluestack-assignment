@@ -16,7 +16,7 @@ ImageViewLabel::ImageViewLabel(const QString &imagePath, QWidget *parent) : QLab
 {
     setScaledContents(true);
     auto pixmap{drawPixmap(imagePath)};
-    this->setPixmap(pixmap);
+    setPixmap(pixmap);
 }
 
 QPixmap ImageViewLabel::drawPixmap(const QString &imagePath)
@@ -27,11 +27,7 @@ QPixmap ImageViewLabel::drawPixmap(const QString &imagePath)
     QPainter painter{&pixmap};
     painter.drawPixmap(0, 0, WIDTH + 200, HEIGHT + 200, applyBlurToPixmap(QPixmap{imagePath}));
 
-    painter.drawPixmap(PIXMAP_POS.x(),
-                       PIXMAP_POS.y(),
-                       WIDTH,
-                       HEIGHT,
-                       QPixmap{imagePath}.scaledToHeight(HEIGHT, Qt::SmoothTransformation));
+    painter.drawPixmap(PIXMAP_POS.x(), PIXMAP_POS.y(), WIDTH, HEIGHT, imagePath);
 
     painter.end();
 

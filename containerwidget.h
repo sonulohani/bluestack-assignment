@@ -12,15 +12,16 @@ class ContainerWidget : public QWidget
     Q_OBJECT
 public:
     explicit ContainerWidget(QWidget *parent = nullptr);
+    virtual ~ContainerWidget() = default;
 
 protected:
-    void timerEvent(QTimerEvent *event) override;
+    void timerEvent(QTimerEvent *) override;
     void resizeEvent(QResizeEvent *event) override;
 
 private:
-    SlidingStackedWidget *stackedWidget;
+    SlidingStackedWidget *m_pSlidingStackedWidget;
     QPushButton *m_pDownloadBluestackButton;
-    QLabel *header, *content;
+    QLabel *m_pHeaderLabel, *m_pContentLabel;
 };
 
 #endif // CONTAINERWIDGET_H

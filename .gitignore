@@ -1,1 +1,8 @@
 /.qmake.stash
+*.o
+Makefile
+*.pro.user
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+bluestacks-assignment

@@ -5,6 +5,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     setWindowTitle(QObject::tr("Bluestacks"));
 
-    containerWidget = new ContainerWidget{this};
-    setCentralWidget(containerWidget);
+    m_pContainerWidget = new ContainerWidget{this};
+    setCentralWidget(m_pContainerWidget);
 }
