@@ -16,6 +16,8 @@ public:
     QPixmap drawPixmap(const QString &imagePath);
     static QPixmap applyBlurToPixmap(const QPixmap &src);
 
+    inline QLabel *getCenterLabel() const { return m_pCenterImageLabel; }
+
 private:
     void setNewPixmap();
 
@@ -24,9 +26,13 @@ private:
     static const int HEIGHT = 760;
 
 public:
-    static constexpr QPointF PIXMAP_POS{100, 180};
+    static constexpr QPoint PIXMAP_POS{100, 180};
 
     QFileInfoList m_imageFileInfoList;
+    QLabel *m_pCenterImageLabel;
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 };
 
 #endif // IMAGEVIEWLABEL_H

@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QResizeEvent>
 #include <QScreen>
+#include <QTransform>
 
 ContainerWidget::ContainerWidget(QWidget *parent) : QWidget(parent)
 {
@@ -72,18 +73,23 @@ void ContainerWidget::timerEvent(QTimerEvent *)
 
 void ContainerWidget::resizeEvent(QResizeEvent *event)
 {
+    QWidget::resizeEvent(event);
     if (m_pSlidingStackedWidget->count()) {
-        auto label = qobject_cast<ImageViewLabel *>(m_pSlidingStackedWidget->widget(0));
-        if (label) {
-            auto screen = label->screen();
-            qDebug() << screen->devicePixelRatio();
-            m_pDownloadBluestackButton->move((event->size().width() - 325)
-                                                 * label->devicePixelRatio(),
-                                             110);
+        auto pImageViewLabel = qobject_cast<ImageViewLabel *>(
+            m_pSlidingStackedWidget->currentWidget());
+        if (pImageViewLabel) {
+            auto pCenterImageLabel = pImageViewLabel->getCenterLabel();
+            auto centerImageLabelframeGeometry = pCenterImageLabel->frameGeometry();
+            m_pDownloadBluestackButton->move(ImageViewLabel::PIXMAP_POS.x()
+                                                 + centerImageLabelframeGeometry.width()
+                                                 - m_pDownloadBluestackButton->width(),
+                                             ImageViewLabel::PIXMAP_POS.y()
+                                                 - m_pDownloadBluestackButton->height() - 25);
+
             m_pHeaderLabel->move(ImageViewLabel::PIXMAP_POS.x(),
-                                 ImageViewLabel::PIXMAP_POS.y() - 80);
+                                 ImageViewLabel::PIXMAP_POS.y() - 70);
             m_pContentLabel->move(ImageViewLabel::PIXMAP_POS.x(),
-                                  ImageViewLabel::PIXMAP_POS.y() - 50);
+                                  ImageViewLabel::PIXMAP_POS.y() - 35);
         }
     }
 }

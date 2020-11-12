@@ -10,13 +10,18 @@
 #include <QPushButton>
 #include <QResizeEvent>
 
-constexpr QPointF ImageViewLabel::PIXMAP_POS;
+constexpr QPoint ImageViewLabel::PIXMAP_POS;
 
 ImageViewLabel::ImageViewLabel(const QString &imagePath, QWidget *parent) : QLabel(parent)
 {
     setScaledContents(true);
     auto pixmap{drawPixmap(imagePath)};
     setPixmap(pixmap);
+
+    m_pCenterImageLabel = new QLabel{this};
+    m_pCenterImageLabel->setScaledContents(true);
+    m_pCenterImageLabel->setPixmap(QPixmap{imagePath});
+    m_pCenterImageLabel->show();
 }
 
 QPixmap ImageViewLabel::drawPixmap(const QString &imagePath)
@@ -25,10 +30,8 @@ QPixmap ImageViewLabel::drawPixmap(const QString &imagePath)
     pixmap.fill(Qt::transparent);
 
     QPainter painter{&pixmap};
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
     painter.drawPixmap(0, 0, WIDTH + 200, HEIGHT + 200, applyBlurToPixmap(QPixmap{imagePath}));
-
-    painter.drawPixmap(PIXMAP_POS.x(), PIXMAP_POS.y(), WIDTH, HEIGHT, imagePath);
-
     painter.end();
 
     return pixmap;
@@ -66,4 +69,13 @@ void ImageViewLabel::setNewPixmap()
     auto pixmap{drawPixmap(fileInfoListIt->absoluteFilePath())};
     this->setPixmap(pixmap);
     ++fileInfoListIt;
+}
+
+void ImageViewLabel::resizeEvent(QResizeEvent *event)
+{
+    QLabel::resizeEvent(event);
+    m_pCenterImageLabel->move(PIXMAP_POS);
+    m_pCenterImageLabel->setFixedSize(event->size().width() - 200, event->size().height() - 200);
+
+    m_pCenterImageLabel->updateGeometry();
 }
