@@ -76,6 +76,4 @@ void ImageViewLabel::resizeEvent(QResizeEvent *event)
     QLabel::resizeEvent(event);
     m_pCenterImageLabel->move(PIXMAP_POS);
     m_pCenterImageLabel->setFixedSize(event->size().width() - 200, event->size().height() - 200);
-
-    m_pCenterImageLabel->updateGeometry();
 }

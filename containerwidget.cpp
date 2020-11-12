@@ -87,9 +87,9 @@ void ContainerWidget::resizeEvent(QResizeEvent *event)
                                                  - m_pDownloadBluestackButton->height() - 25);
 
             m_pHeaderLabel->move(ImageViewLabel::PIXMAP_POS.x(),
-                                 ImageViewLabel::PIXMAP_POS.y() - 70);
+                                 ImageViewLabel::PIXMAP_POS.y() - 80);
             m_pContentLabel->move(ImageViewLabel::PIXMAP_POS.x(),
-                                  ImageViewLabel::PIXMAP_POS.y() - 35);
+                                  ImageViewLabel::PIXMAP_POS.y() - 40);
         }
     }
 }
