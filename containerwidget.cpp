@@ -19,6 +19,9 @@ ContainerWidget::ContainerWidget(QWidget *parent) : QWidget(parent)
         const QStringList &filters{"*.png", "*.jpg", "*.bmp"};
         return QDir{"images"}.entryInfoList(filters, QDir::Files | QDir::NoDotAndDotDot);
     }();
+    if (!imageFileInfoList.isEmpty()) {
+        imageFileInfoList.append(imageFileInfoList.first());
+    }
 
     new TopBarWidget{this};
 
