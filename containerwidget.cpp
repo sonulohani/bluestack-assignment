@@ -39,11 +39,11 @@ ContainerWidget::ContainerWidget(QWidget *parent) : QWidget(parent)
     startTimer(std::chrono::seconds(3));
 
     m_pHeaderLabel = new QLabel{this};
-    m_pHeaderLabel->setText(QObject::tr("Bluestacks Editor's Choice"));
-    m_pHeaderLabel->setStyleSheet("QLabel {color: #5EC1E9;}");
+    m_pHeaderLabel->setText(QObject::tr("BlueStacks Editor's Choice"));
+    m_pHeaderLabel->setStyleSheet("QLabel {color: #89CCDF;}");
     m_pHeaderLabel->setFixedSize(320, 30);
     QFont font{m_pHeaderLabel->font()};
-    font.setPointSize(14);
+    font.setPointSize(16);
     font.setBold(false);
     m_pHeaderLabel->setFont(font);
 
@@ -52,16 +52,16 @@ ContainerWidget::ContainerWidget(QWidget *parent) : QWidget(parent)
         "Every week we pick our favourite android apps that look and play beautifully on your PC"));
     m_pContentLabel->setStyleSheet("QLabel {color: #FFFFFF;}");
     font = m_pContentLabel->font();
-    font.setPointSize(10);
+    font.setPointSize(11);
     m_pContentLabel->setFont(font);
     m_pContentLabel->setFixedSize(1000, 30);
 
     m_pDownloadBluestackButton = new QPushButton{this};
-    m_pDownloadBluestackButton->setText(QObject::tr("Download Bluestacks"));
-    m_pDownloadBluestackButton->setFixedSize(220, 50);
+    m_pDownloadBluestackButton->setText(QObject::tr("Download BlueStacks"));
+    m_pDownloadBluestackButton->setFixedSize(275, 60);
     m_pDownloadBluestackButton->setStyleSheet(
-        "QPushButton{background-color: #89CDE7; color: white;border: none;font-size: "
-        "11pt;font-weight: bold;}");
+        "QPushButton{background-color: #89CCE7; color: white;border: none;font-size: "
+        "13pt;border-radius: 10px;}");
     m_pDownloadBluestackButton->show();
     m_pDownloadBluestackButton->raise();
 }
@@ -84,12 +84,12 @@ void ContainerWidget::resizeEvent(QResizeEvent *event)
                                                  + centerImageLabelframeGeometry.width()
                                                  - m_pDownloadBluestackButton->width(),
                                              ImageViewLabel::PIXMAP_POS.y()
-                                                 - m_pDownloadBluestackButton->height() - 25);
+                                                 - m_pDownloadBluestackButton->height() - 16);
 
             m_pHeaderLabel->move(ImageViewLabel::PIXMAP_POS.x(),
-                                 ImageViewLabel::PIXMAP_POS.y() - 80);
+                                 ImageViewLabel::PIXMAP_POS.y() - 85);
             m_pContentLabel->move(ImageViewLabel::PIXMAP_POS.x(),
-                                  ImageViewLabel::PIXMAP_POS.y() - 40);
+                                  ImageViewLabel::PIXMAP_POS.y() - 50);
         }
     }
 }
