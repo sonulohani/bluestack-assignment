@@ -87,7 +87,7 @@ void ContainerWidget::resizeEvent(QResizeEvent *event)
                                                  + centerImageLabelframeGeometry.width()
                                                  - m_pDownloadBluestackButton->width(),
                                              ImageViewLabel::PIXMAP_POS.y()
-                                                 - m_pDownloadBluestackButton->height() - 50);
+                                                 - m_pDownloadBluestackButton->height() - 60);
 
             m_pHeaderLabel->move(ImageViewLabel::PIXMAP_POS.x(),
                                  ImageViewLabel::PIXMAP_POS.y() - 130);
