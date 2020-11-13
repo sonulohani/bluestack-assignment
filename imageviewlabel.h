@@ -26,7 +26,7 @@ private:
     static const int HEIGHT = 760;
 
 public:
-    static constexpr QPoint PIXMAP_POS{100, 180};
+    static constexpr QPoint PIXMAP_POS{100, 230};
 
     QFileInfoList m_imageFileInfoList;
     QLabel *m_pCenterImageLabel;

@@ -55,7 +55,7 @@ ContainerWidget::ContainerWidget(QWidget *parent) : QWidget(parent)
         "Every week we pick our favourite android apps that look and play beautifully on your PC"));
     m_pContentLabel->setStyleSheet("QLabel {color: #FFFFFF;}");
     font = m_pContentLabel->font();
-    font.setPointSize(11);
+    font.setPointSize(12);
     m_pContentLabel->setFont(font);
     m_pContentLabel->setFixedSize(1000, 30);
 
@@ -87,12 +87,12 @@ void ContainerWidget::resizeEvent(QResizeEvent *event)
                                                  + centerImageLabelframeGeometry.width()
                                                  - m_pDownloadBluestackButton->width(),
                                              ImageViewLabel::PIXMAP_POS.y()
-                                                 - m_pDownloadBluestackButton->height() - 16);
+                                                 - m_pDownloadBluestackButton->height() - 50);
 
             m_pHeaderLabel->move(ImageViewLabel::PIXMAP_POS.x(),
-                                 ImageViewLabel::PIXMAP_POS.y() - 85);
+                                 ImageViewLabel::PIXMAP_POS.y() - 130);
             m_pContentLabel->move(ImageViewLabel::PIXMAP_POS.x(),
-                                  ImageViewLabel::PIXMAP_POS.y() - 50);
+                                  ImageViewLabel::PIXMAP_POS.y() - 80);
         }
     }
 }
