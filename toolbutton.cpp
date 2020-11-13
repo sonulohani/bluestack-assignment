@@ -32,7 +32,7 @@ ToolButton::ToolButton(const QString &text, QWidget *parent) : QToolButton(paren
     setAutoRaise(true);
     installEventFilter(this);
 
-    Q_ASSERT(connect(m_pMenu, &QMenu::aboutToShow, [=]() {
+    connect(m_pMenu, &QMenu::aboutToShow, [=]() {
         QPropertyAnimation *pSizeAnimation{new QPropertyAnimation{m_pMenu, "size"}};
         pSizeAnimation->setDuration(1000);
         pSizeAnimation->setStartValue(QSize(m_pMenu->sizeHint().width(), 0));
@@ -40,7 +40,7 @@ ToolButton::ToolButton(const QString &text, QWidget *parent) : QToolButton(paren
             QSize(m_pMenu->sizeHint().width(), m_pMenu->sizeHint().height()));
         pSizeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
         m_pMenu->show();
-    }));
+    });
 }
 
 void ToolButton::addActionToMenu(const QString &actionText)

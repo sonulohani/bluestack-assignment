@@ -186,26 +186,26 @@ TopBarWidget::TopBarWidget(QWidget *parent) : QWidget(parent)
 
     setLayout(m_pParentLayout);
 
-    Q_ASSERT(connect(m_pAppsButton, &QPushButton::clicked, [] {
+    connect(m_pAppsButton, &QPushButton::clicked, [] {
         showMessageBox(QObject::tr("We have a lot of apps supported!"));
-    }));
+    });
 
-    Q_ASSERT(connect(m_pBlogButton, &QPushButton::clicked, [] {
+    connect(m_pBlogButton, &QPushButton::clicked, [] {
         showMessageBox(QObject::tr("You can discover tons of information in our blogs."));
-    }));
+    });
 
-    Q_ASSERT(connect(m_pSupportButton, &QPushButton::clicked, [] {
+    connect(m_pSupportButton, &QPushButton::clicked, [] {
         showMessageBox(QObject::tr("We are here to help you. Just SHOOT"));
-    }));
+    });
 
-    Q_ASSERT(connect(m_pContactUsButton, &QPushButton::clicked, [] {
+    connect(m_pContactUsButton, &QPushButton::clicked, [] {
         showMessageBox(QObject::tr("Its secret"));
-    }));
+    });
 
-    Q_ASSERT(connect(m_pEnterpriseButton, &QPushButton::clicked, [] {
+    connect(m_pEnterpriseButton, &QPushButton::clicked, [] {
         showMessageBox(
             QObject::tr("You seem to be a important customer. Let me present the best from us."));
-    }));
+    });
 }
 
 bool TopBarWidget::eventFilter(QObject *obj, QEvent *ev)
