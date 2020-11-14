@@ -4,6 +4,7 @@
 #include <QEvent>
 #include <QFontMetrics>
 #include <QMenu>
+#include <QMouseEvent>
 #include <QPropertyAnimation>
 #include <QStyleOptionToolButton>
 #include <QStylePainter>
@@ -11,6 +12,7 @@
 ToolButton::ToolButton(const QString &text, QWidget *parent) : QToolButton(parent)
 {
     setText(text);
+    m_defaultCursor = cursor();
     setMouseTracking(true);
 
     QFont font{this->font()};
@@ -31,15 +33,14 @@ ToolButton::ToolButton(const QString &text, QWidget *parent) : QToolButton(paren
     setMenu(m_pMenu);
     setAutoRaise(true);
     installEventFilter(this);
+    m_pMenu->installEventFilter(this);
 
-    connect(m_pMenu, &QMenu::aboutToShow, [=]() {
-        QPropertyAnimation *pSizeAnimation{new QPropertyAnimation{m_pMenu, "size"}};
-        pSizeAnimation->setDuration(1000);
-        pSizeAnimation->setStartValue(QSize(m_pMenu->sizeHint().width(), 0));
-        pSizeAnimation->setEndValue(
-            QSize(m_pMenu->sizeHint().width(), m_pMenu->sizeHint().height()));
-        pSizeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
-        m_pMenu->show();
+    connect(m_pMenu, &QMenu::aboutToShow, this, &ToolButton::onMenuAboutShow);
+
+    connect(m_pMenu, &QMenu::aboutToHide, this, [=]() {
+        m_bMouseOnTop = false;
+        setCursor(m_defaultCursor);
+        update();
     });
 }
 
@@ -54,14 +55,31 @@ bool ToolButton::eventFilter(QObject *obj, QEvent *event)
 {
     if (qobject_cast<ToolButton *>(obj) == this) {
         if (event->type() == QEvent::HoverEnter) {
-            m_bMouseOnTop = true;
-            update();
             showMenu();
-        } else if (event->type() == QEvent::HoverLeave) {
-            m_bMouseOnTop = false;
         }
     }
+    if (qobject_cast<QMenu *>(obj) == m_pMenu) {
+        if (event->type() == QEvent::MouseMove) {
+            if (!m_pMenu->underMouse()
+                && !this->rect().contains(this->mapFromGlobal(QCursor::pos()))) {
+                m_pMenu->hide();
+            }
+        }
+    }
+
     return false;
+}
+
+void ToolButton::onMenuAboutShow()
+{
+    m_bMouseOnTop = true;
+    update();
+    QPropertyAnimation *pSizeAnimation{new QPropertyAnimation{m_pMenu, "size"}};
+    pSizeAnimation->setDuration(500);
+    pSizeAnimation->setStartValue(QSize(m_pMenu->sizeHint().width(), 0));
+    pSizeAnimation->setEndValue(QSize(m_pMenu->sizeHint().width(), m_pMenu->sizeHint().height()));
+    pSizeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+    m_pMenu->show();
 }
 
 void ToolButton::paintEvent(QPaintEvent *)
@@ -90,5 +108,6 @@ void ToolButton::paintEvent(QPaintEvent *)
                                                                      30,
                                                                      Qt::IgnoreAspectRatio,
                                                                      Qt::SmoothTransformation));
+
     p.restore();
 }

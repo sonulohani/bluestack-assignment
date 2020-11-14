@@ -8,6 +8,7 @@
 PushButton::PushButton(const QString &text, QWidget *parent) : QPushButton(text, parent)
 {
     setMouseTracking(true);
+    m_defaultCursor = cursor();
     QFont font{this->font()};
     font.setPointSize(12);
 
@@ -53,5 +54,16 @@ void PushButton::paintEvent(QPaintEvent *)
                textBoundingRect.height(),
                Qt::AlignTop | Qt::AlignHCenter,
                tempText);
+
+    if (m_bMouseOnTop) {
+        p.setBrush(QBrush{QColor(42, 157, 244)});
+        p.drawRect(0, height() - 2, width(), 2);
+        auto cursr{cursor()};
+        cursr.setShape(Qt::PointingHandCursor);
+        setCursor(cursr);
+    } else {
+        setCursor(m_defaultCursor);
+    }
+
     p.restore();
 }

@@ -18,10 +18,14 @@ protected:
     void paintEvent(QPaintEvent *) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
 
+private slots:
+    void onMenuAboutShow();
+
 private:
     QRectF textBoundingRect;
     QMenu *m_pMenu;
     bool m_bMouseOnTop{false};
+    QCursor m_defaultCursor;
 };
 
 #endif // TOOLBUTTON_H

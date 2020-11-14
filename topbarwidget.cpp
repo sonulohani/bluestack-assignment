@@ -61,6 +61,8 @@ TopBarWidget::TopBarWidget(QWidget *parent) : QWidget(parent)
 
     m_pParentLayout = new QHBoxLayout{this};
     m_pParentLayout->setSpacing(0);
+    m_pParentLayout->setMargin(0);
+    m_pParentLayout->setContentsMargins(0, 0, 0, 0);
 
     m_pBluestacksLogo = new QLabel{this};
     auto logo_pixmap = QPixmap{"://resources/officialLogo.png"}.scaled(220,

@@ -17,6 +17,7 @@ protected:
 private:
     QRectF textBoundingRect;
     bool m_bMouseOnTop{false};
+    QCursor m_defaultCursor;
 };
 
 #endif // PUSHBUTTON_H
