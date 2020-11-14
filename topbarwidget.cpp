@@ -151,34 +151,37 @@ TopBarWidget::TopBarWidget(QWidget *parent) : QWidget(parent)
     m_pCountriesCombobox = new ComboBox{this};
 
     QDomDocument document;
-    bool canReadXML = true;
+    bool bCanReadXML = true;
 
     QFile file{"://XML/countries.xml"};
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Failed to open the file for reading.";
-        canReadXML = false;
+        bCanReadXML = false;
     } else {
         // loading
         if (!document.setContent(&file)) {
             qDebug() << "Failed to load the file for reading.";
-            canReadXML = false;
+            bCanReadXML = false;
         }
         file.close();
     }
 
-    if (canReadXML) {
+    if (bCanReadXML) {
         QDomElement root{document.firstChildElement()};
         auto countryCodes{retrievElements(root, "country", "code")};
         for (auto code : countryCodes) {
-            m_pCountriesCombobox->addItem(QIcon{"://Countries/" + code.first.toLower() + ".png"},
-                                          code.second);
+            QPixmap pix{"://Countries/" + code.first.toLower() + ".png"};
+            pix = pix.scaled(24, 24, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            m_pCountriesCombobox->addItem(QIcon{pix}, code.second);
         }
     }
 
-    auto *pView = static_cast<ComboView *>(m_pCountriesCombobox->view());
-    pView->setFixedHeight(pView->model()->rowCount() * 22);
+    m_pCountriesCombobox->setCurrentText("English");
 
-    m_pCountriesCombobox->setFixedSize(65, 40);
+    auto *pView = static_cast<ComboView *>(m_pCountriesCombobox->view());
+    pView->setFixedHeight(pView->model()->rowCount() * 38);
+
+    m_pCountriesCombobox->setFixedSize(80, 45);
     m_pParentLayout->addWidget(m_pCountriesCombobox, 0, Qt::AlignHCenter);
 
     m_pFixedSpacer[8] = new QSpacerItem{40, 0};

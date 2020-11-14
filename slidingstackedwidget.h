@@ -11,10 +11,11 @@ class SlidingStackedWidget : public QStackedWidget
 
 public:
     explicit SlidingStackedWidget(QWidget *parent = nullptr);
+    virtual ~SlidingStackedWidget() = default;
 
     void slideInNext();
 
-protected slots:
+private slots:
     void animationDoneSlot(void);
 
 private:
